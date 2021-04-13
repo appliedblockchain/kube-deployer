@@ -1,0 +1,11 @@
+desc "Run"
+task :run do
+  sh "bundle exec ruby src/main.rb"
+end
+
+desc "Spec (tests)"
+task :spec do
+  sh "bundle exec rspec"
+end
+
+task default: :run
