@@ -22,7 +22,7 @@ end
 module DeploymentRunner
 
   def run_deployment
-
+    Deployer.deploy
   end
 
 end
