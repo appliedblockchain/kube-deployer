@@ -44,7 +44,7 @@ class DeployerApp < Roda
       }.to_sym
     }
 
-    r.get("environments") {
+    r.post("environments") {
       envs = Environment.all
 
       #
