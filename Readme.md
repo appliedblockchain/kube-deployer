@@ -1,8 +1,8 @@
 # kube-deployer
 
-Rewrite of https://github.com/makevoid/deployer specifically made for kubernetes
+Rewrite of docker swarm deployer (to be open sourced) adapted for Kubernetes.
 
-### Prereq
+### Prereqs
 
 - Ruby 2+ installed (Ruby 3 recommended)
 - bundler installed (`gem i bundler`)
