@@ -33,7 +33,7 @@ class DeployerApp < Roda
   plugin :error_handler
   # plugin :all_verbs
   # plugin :multi_route
-
+  
   include DeploymentRunner
   include ErrorResponses
 
@@ -76,11 +76,3 @@ class DeployerApp < Roda
 
 end
 
-class App < Roda
-  plugin :render, engine: 'haml'
-  plugin :multi_route
-  plugin :partials
-  plugin :all_verbs
-  plugin :not_found
-  plugin :error_handler
-  plugin :public
