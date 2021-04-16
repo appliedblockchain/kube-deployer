@@ -2,12 +2,14 @@ GEM
   remote: https://rubygems.org/
   specs:
     excon (0.79.0)
+    redis (4.2.5)
 
 PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
   excon
+  redis
 
 BUNDLED WITH
    2.2.3
