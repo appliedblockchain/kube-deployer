@@ -4,6 +4,15 @@ include Deployer
 
 DEPLOYER = D::Deployer
 
+if $0 == __FILE__
+  project  = ENV["project"]  || "launchpad"
+  env_name = ENV["env_name"] || "dev"
+  username = ENV["username"] || "makevoid"
+  DEPLOYER.deploy(project:, env_name:, username: username)
+end
+
+# notes
+
 # notify_slack_start branch_name: nil, slack_user: "makevoid", project: "kubetest", environment: "ab"
 
 # clone repo
@@ -11,10 +20,3 @@ DEPLOYER = D::Deployer
 
 # repo_url: "https://github.com/appliedblockchain/PROJECT_NAME"
 
-# project: "launchpad-kube"
-# containers:
-#   name: "app"
-#   dir:  ""
-# environments:
-#   xx
-#   yyyy
