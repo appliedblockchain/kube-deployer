@@ -32,4 +32,4 @@ include NotifySlack
 # redis_host = AWS_REDIS_HOST
 
 redis_host = "localhost"
-REDIS = Redis.new host: redis_host
+R = Redis.new host: redis_host

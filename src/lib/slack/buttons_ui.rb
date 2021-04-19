@@ -2,15 +2,16 @@ module Slack
 
   class ButtonsUI
 
-    def self.display
-      new.display
+    # change params names - section name / buttons info
+    def self.display(stack_name:, deploy_targets:)
+      new.display(stack_name: stack_name, deploy_targets: deploy_targets)
     end
 
-    def display
-      generate_buttons
+    def display(stack_name:, deploy_targets:)
+      generate_buttons(stack_name: stack_name, deploy_targets: deploy_targets)
     end
 
-    def generate_buttons
+    def generate_buttons(stack_name:, deploy_targets:)
       section_name = stack_name
       button_infos = deploy_targets
       panel = []
@@ -24,12 +25,13 @@ module Slack
       panel
     end
 
-    def generate_button_row(section_name, button_infos, idx)
+    def generate_button_row(section_name:, button_infos:, idx:)
       buttons = []
+      # todo: move colors in configs
       colors = ["#323C8C", "#775500", "#1d4482", "#AA2299", "#00AADD", "#BBBBBB"]
       color = colors[idx] || "#999999"
       button_infos.each do |deploy_target_env, deploy_target|
-        button = SlackGenerateButton.(deploy_target_env, deploy_target)
+        button = generate_button deploy_target_env:  deploy_target_env, deploy_target: deploy_target
         buttons.push button unless [:production, :prod, :"sd-02"].include? deploy_target_env
       end
       # buttons.sort_by!{ |button| button.fetch :xxx }
@@ -44,7 +46,7 @@ module Slack
       }
     end
 
-    def generate_button
+    def generate_button(deploy_target_env:, deploy_target:)
 
     end
 

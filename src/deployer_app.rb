@@ -52,6 +52,47 @@ module SlackParams
   end
 end
 
+# TODO move in deployer
+module DeploymentTriggering
+
+  def deployment_trigger_new!(project:, environment:, user:)
+    puts "starting a new deployment"
+    R.setex "environments:current", DEPLOYMENT_MAX_TIME, Time.now.to_i
+
+    Thread.new do
+      output = deploy! project: project, environment: environment, user: user
+      puts "DEPLOYMENT COMPLETE!"
+      puts output
+    end
+
+    {
+      status: "deploying",
+      project: project,
+      environment: environment
+    }
+  end
+
+  def deployment_wait_end(wait_time:)
+    puts "tried to retrigger - stopped: waiting for the deployment to finish..."
+    minutes = (wait_time / 60).floor
+    time_left = "#{minutes} min #{(wait_time - minutes*60).ceil} sec"
+    { status: "waiting", wait_time_left: time_left }
+  end
+
+  def start_deployment!(project:, environment:, user:)
+    time_cache = R["environments:current"]
+    time = Time.at time_cache.to_i if time_cache
+    if time && time + DEPLOYMENT_MAX_TIME >= Time.now
+      time_left = time + DEPLOYMENT_MAX_TIME - Time.now
+      deployment_wait_end wait_time: time_left
+    else
+      deployment_trigger_new! project: project, environment: environment, user: user
+    end
+  end
+
+end
+
+
 class DeployerApp < Roda
   plugin :json
   plugin :not_found
