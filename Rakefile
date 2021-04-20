@@ -13,4 +13,6 @@ task :spec do
   sh "bundle exec rspec"
 end
 
+task test: :spec
+
 task default: :run

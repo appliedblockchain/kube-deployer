@@ -1,20 +1,39 @@
 class Healthcheck
 
+  URL_INGRESS = "/health"
   URL_API = "/api/health"
-  URL_NGINX = "/health"
   URL_REACT = "/health_react"
-  
+
   URLS = {
-    api: URL_API,
-    api: URL_API,
+    ingress:  URL_INGRESS,
+    api:      URL_API,
+    react:    URL_REACT,
   }
 
-  def self.check
-    new.check
+  attr_reader :host
+
+  def self.check(host:)
+    new(host: host).check
+  end
+
+  def initialize(host:)
+    @host = host
   end
 
   def check
-    http_get url: url
+    check_all
+  end
+
+  def check_all
+    URLS.each do |url|
+      check_url url: url
+    end
+  end
+
+  def check_url(url:)
+    url =
+    resp = http_get url: url
+    raise resp.status.inspect
   end
 
   private

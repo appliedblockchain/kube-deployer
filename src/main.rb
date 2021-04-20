@@ -8,7 +8,7 @@ if $0 == __FILE__
   project  = ENV["project"]  || "launchpad"
   env_name = ENV["env_name"] || "dev"
   username = ENV["username"] || "makevoid"
-  DEPLOYER.deploy(project:, env_name:, username: username)
+  DEPLOYER.deploy project: project, env_name: env_name, username: username
 end
 
 # notes
@@ -19,4 +19,3 @@ end
 # build each container with compose
 
 # repo_url: "https://github.com/appliedblockchain/PROJECT_NAME"
-
