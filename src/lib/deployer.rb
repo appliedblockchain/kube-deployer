@@ -9,6 +9,12 @@ module D
       puts "Deployment of #{project} - env: #{env_name} - triggered by: #{username} - starting"
 
 
+      Builder.run project: project, containers: containers
+      
+      Deploy.run project: project, env_name: env_name
+      
+      Healtchcheck.check host: host
+
     end
   end
 

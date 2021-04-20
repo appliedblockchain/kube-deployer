@@ -31,7 +31,7 @@ class Healthcheck
   end
 
   def check_url(url:)
-    url =
+    url = "#{@host}/#{url}"
     resp = http_get url: url
     raise resp.status.inspect
   end
