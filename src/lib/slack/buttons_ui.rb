@@ -34,7 +34,7 @@ module Slack
         button = generate_button deploy_target_env:  deploy_target_env, deploy_target: deploy_target
         buttons.push button unless [:production, :prod, :"sd-02"].include? deploy_target_env
       end
-      # buttons.sort_by!{ |button| button.fetch :xxx }
+      # buttons.sort_by!{ |button| button.f :xxx }
       {
         text: "#{section_name.to_s.capitalize}:",
         fallback: "",

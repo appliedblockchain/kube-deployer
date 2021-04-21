@@ -4,7 +4,7 @@ class Environment
 
   def self.all
     config = GetConfig.()
-    raise config.inspect
+    config
   end
 
 end

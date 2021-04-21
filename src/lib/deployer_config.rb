@@ -29,6 +29,7 @@ class DeployerConfig
   end
 
   def deployer_config_get
+    puts "loading config: #{DEPLOYER_CONFIG_PATH}"
     YAML.load_file DEPLOYER_CONFIG_PATH
   end
 
@@ -36,13 +37,13 @@ class DeployerConfig
     targets = {}
     config.each do |deploy_target_name, deploy_target_config|
       conf = deploy_target_config.transform_keys &:to_sym
-      stack_name = conf.fetch :project
+      stack_name = conf.f :project
       stack_name = stack_name.to_sym
       deploy_target_env = transform_deploy_target_env deploy_target_name
       conf[:deploy_target_name] = deploy_target_name
       conf[:deploy_target_env]  = deploy_target_env
       targets[stack_name] = {} unless targets[stack_name]
-      targets[stack_name][deploy_target_env] = conf
+      targets[stack_name] = conf
     end
     targets
   end

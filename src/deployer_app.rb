@@ -29,14 +29,14 @@ end
 
 module SlackParams
   def get_deployment_params(r:)
-    payload = JSON.parse r.params.fetch "payload"
-    action = payload.fetch("actions").first
+    payload = JSON.parse r.params.f "payload"
+    action = payload.f("actions").first
 
-    project = get_project_from_action action   
-    user = payload.fetch("user").fetch "name" 
+    project = get_project_from_action action
+    user = payload.f("user").f "name"
 
-    env = action.fetch "value"
-      
+    env = action.f "value"
+
     {
       project: project,
       env: env,
@@ -44,9 +44,9 @@ module SlackParams
     }
   end
 
-  def get_project_from_action(     
+  def get_project_from_action(
     # TODO pass a separate value so we don't need regexes
-    project = action.fetch("name").match /environment-(?<environment>(\w+-*)+)/
+    project = action.f("name").match /environment-(?<environment>(\w+-*)+)/
     project = project[:environment]
     project.to_sym
   end
@@ -99,7 +99,7 @@ class DeployerApp < Roda
   plugin :error_handler
   # plugin :all_verbs
   # plugin :multi_route
-  
+
   include DeploymentRunner
   include ErrorResponses
   include SlackParams
@@ -147,4 +147,3 @@ class DeployerApp < Roda
   end
 
 end
-

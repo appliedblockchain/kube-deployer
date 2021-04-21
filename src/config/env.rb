@@ -12,6 +12,7 @@ include ConfLoad
 require_relative "env_constants"
 require_relative "conf"
 
+require_relative "../lib/monkeypatches"
 require_relative "../lib/net_lib"
 require_relative "../lib/exe_lib"
 require_relative "../lib/notify_slack"
@@ -26,6 +27,8 @@ require_relative "../models/healthcheck"
 
 include NetLib
 include NotifySlack
+
+DEPLOYER_IP = "localhost"
 
 # NOTE: to use an external redis host, such as aws elasticache redis (to acheive H/A), load host+secrets from config file
 # AWS_REDIS_HOST = load_conf_file "aws_redis_host"
