@@ -10,6 +10,8 @@ class Healthcheck
     react:    URL_REACT,
   }
 
+  NET = Excon
+
   attr_reader :host
 
   def self.check(host:)
@@ -25,21 +27,27 @@ class Healthcheck
   end
 
   def check_all
-    URLS.each do |url|
-      check_url url: url
+    error = { status: :ERROR, message: "Healthcheck error", check: nil }
+    URLS.each do |container, url|
+      url = "#{@host}#{url}"
+      if code = healthcheck_failing(url: url)
+        error[:check] = { url: url, status_code: code, container: container }
+        return error
+      end
     end
+    { status: :ok, message: "healthcheck ok", check: nil }
   end
 
-  def check_url(url:)
-    url = "#{@host}/#{url}"
+  def healthcheck_failing(url:)
     resp = http_get url: url
-    raise resp.status.inspect
+    return resp.status if resp.status != 200
+    return false
   end
 
   private
 
   def http_get(url:)
-    Excon.get url
+    NET.get url
   end
 
 end

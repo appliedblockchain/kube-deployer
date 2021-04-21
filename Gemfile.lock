@@ -3,6 +3,7 @@ GEM
   specs:
     diff-lcs (1.4.4)
     excon (0.79.0)
+    rake (13.0.3)
     redis (4.2.5)
     rspec-core (3.10.1)
       rspec-support (~> 3.10.0)
@@ -19,6 +20,7 @@ PLATFORMS
 
 DEPENDENCIES
   excon
+  rake
   redis
   rspec-core
   rspec-expectations
