@@ -113,10 +113,17 @@ class DeployerApp < Roda
 
     r.post("environments") {
       envs = Environment.all
+      panels = ButtonsUI.display envs: envs
 
-      {
-        message: "slack buttons"
-      }
+      [
+        {
+          text: "*Trigger deployment:*",
+          status: "OK",
+        }, {
+          text: "",
+          attachments: panels,
+        }
+      ]
     }
 
     r.post("deployment") {

@@ -3,12 +3,28 @@ module Slack
   class ButtonsUI
 
     # change params names - section name / buttons info
+    
     def self.display(stack_name:, deploy_targets:)
       new.display(stack_name: stack_name, deploy_targets: deploy_targets)
     end
 
-    def display(stack_name:, deploy_targets:)
-      generate_buttons(stack_name: stack_name, deploy_targets: deploy_targets)
+    def display(deployer_config:)
+      generate_panels deployer_config: deployer_config
+    end
+
+    def generate_panels(deployer_config:)
+      panels = []
+
+      config = deployer_config
+      idx = 0
+      config.each do |stack_name, deploy_targets|
+        panel = generate_buttons stack_name: stack_name, deploy_targets: deploy_targets, idx: idx
+        panels.push panel
+        idx += 1
+      end
+      panels.sort_by!{ |panel| panel.fetch :text }
+
+      panels
     end
 
     def generate_buttons(stack_name:, deploy_targets:)
@@ -47,7 +63,13 @@ module Slack
     end
 
     def generate_button(deploy_target_env:, deploy_target:)
-
+      stack_name = deploy_target.fetch :stack_name
+      {
+        name: "environment-#{stack_name}",
+        text: deploy_target_env.to_s.capitalize,
+        value: deploy_target_env,
+        type: "button",
+      }
     end
 
   end
