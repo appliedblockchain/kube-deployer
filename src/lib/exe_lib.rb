@@ -19,11 +19,12 @@ module ExeLib
   end
 
   def ssh_exe(cmd)
-    exe "ssh -t root@#{DEPLOYER_IP} '#{cmd}'"
+    return exe cmd if HOST_MODE
+    exe "ssh -t root@#{DEPLOYER_HOST} '#{cmd}'"
   end
 
   def ssh_exe_r(cmd)
-    r_exe "ssh -t root@#{DEPLOYER_IP} '#{cmd}'"
+    r_exe "ssh -t root@#{DEPLOYER_HOST} '#{cmd}'"
   end
 
 end

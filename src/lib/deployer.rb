@@ -13,6 +13,8 @@ class Deployer
 
     Build.run project: project, containers: containers
 
+    exit
+
     Deploy.run project: project, env_name: env_name
 
     Healtchcheck.check host: host

@@ -5,6 +5,9 @@ Bundler.require :default#,  ...
 
 PATH = File.expand_path "../../", __FILE__
 
+HOST_MODE = true # use only in development
+# HOST_MODE = false # TODO: switch to this in production
+
 require_relative "../lib/conf_load"
 CONF_FILE_PREFIX = "kube_deployer"
 include ConfLoad
@@ -28,7 +31,7 @@ require_relative "../models/healthcheck"
 include NetLib
 include NotifySlack
 
-DEPLOYER_IP = "localhost"
+DEPLOYER_HOST = load_conf_file "host"
 
 # NOTE: to use an external redis host, such as aws elasticache redis (to acheive H/A), load host+secrets from config file
 # AWS_REDIS_HOST = load_conf_file "aws_redis_host"
