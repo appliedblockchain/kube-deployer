@@ -1,4 +1,4 @@
-module  Deploy
+class Deploy
 
   include ExeLib
 

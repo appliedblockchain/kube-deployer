@@ -3,7 +3,7 @@ class Build
   include ExeLib
 
   def self.run(project:, containers:)
-    new.run(project: project, containers: containers)
+    new.run project: project, containers: containers
   end
 
   def run(project:, containers:)
