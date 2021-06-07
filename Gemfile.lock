@@ -2,7 +2,7 @@ GEM
   remote: https://rubygems.org/
   specs:
     diff-lcs (1.4.4)
-    excon (0.79.0)
+    excon (0.82.0)
     rake (13.0.3)
     redis (4.2.5)
     rspec-core (3.10.1)

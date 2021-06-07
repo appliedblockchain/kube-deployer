@@ -1,5 +1,10 @@
 desc "Run"
 task :run do
+  sh "cd src && bundle exec rake"
+end
+
+desc "Run Deploy"
+task :deploy do
   sh "bundle exec ruby src/main.rb"
 end
 
