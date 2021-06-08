@@ -21,7 +21,7 @@ end
 
 module DeploymentRunner
 
-  def run_deployment(project:, env:,
+  def run_deployment(project:, env:)
     Deployer.deploy
   end
 
@@ -29,10 +29,11 @@ end
 
 module SlackParams
   def get_deployment_params(r:)
+    p r.params.inspect
     payload = JSON.parse r.params.f "payload"
     action = payload.f("actions").first
 
-    project = get_project_from_action action
+    project = get_project_from_action action: action
     user = payload.f("user").f "name"
 
     env = action.f "value"
@@ -44,9 +45,10 @@ module SlackParams
     }
   end
 
-  def get_project_from_action(
+  def get_project_from_action(action:)
     # TODO pass a separate value so we don't need regexes
-    project = action.f("name").match /environment-(?<environment>(\w+-*)+)/
+    project = action.f("name").match(/environment-(?<environment>(\w+-*)+)/)
+    # project = action.f("name").match(/^environment-(*.+)$/)
     project = project[:environment]
     project.to_sym
   end
@@ -92,7 +94,6 @@ module DeploymentTriggering
 
 end
 
-
 class DeployerApp < Roda
   plugin :json
   plugin :not_found
@@ -113,9 +114,10 @@ class DeployerApp < Roda
 
     r.post("environments") {
       envs = Environment.all
-      panels = ButtonsUI.display envs: envs
+      panels = Slack::ButtonsUI.display deployer_config: envs
 
-      [
+
+      messages = [
         {
           text: "*Trigger deployment:*",
           status: "OK",
@@ -124,6 +126,11 @@ class DeployerApp < Roda
           attachments: panels,
         }
       ]
+
+      {
+        text: "",
+        attachments: messages,
+      }
     }
 
     r.post("deployment") {
@@ -150,7 +157,7 @@ class DeployerApp < Roda
         }
       end
     }
-  }
+
   end
 
 end

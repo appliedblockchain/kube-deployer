@@ -1,6 +1,11 @@
-desc "Run"
+desc "Run" # use this to run the deployer on docker (default - binds to all ips)
 task :run do
-  sh "cd src && bundle exec rake"
+  sh "cd src && bundle exec rackup -o 0.0.0.0 -p 3000"
+end
+
+desc "Run (dev)"
+task :run_dev do
+  sh "cd src && rerun -p \"**/*.{rb}\" -- bundle exec rackup -o 0.0.0.0 -p 3000"
 end
 
 desc "Run Deploy"

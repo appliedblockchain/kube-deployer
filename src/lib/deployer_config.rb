@@ -42,8 +42,9 @@ class DeployerConfig
       deploy_target_env = transform_deploy_target_env deploy_target_name
       conf[:deploy_target_name] = deploy_target_name
       conf[:deploy_target_env]  = deploy_target_env
-      targets[stack_name] = {} unless targets[stack_name]
-      targets[stack_name] = conf
+      targets[deploy_target_env] = {} unless targets[deploy_target_env]
+      targets[deploy_target_env][stack_name] = {} unless targets[deploy_target_env][stack_name]
+      targets[deploy_target_env][stack_name] = conf
     end
     targets
   end
@@ -64,5 +65,5 @@ end
 if $0 == __FILE__
   require_relative "../config/env"
   conf = DeployerConfig.config
-  p conf
+  pp conf
 end
