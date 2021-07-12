@@ -116,16 +116,12 @@ class DeployerApp < Roda
       envs = Environment.all
       panels = Slack::ButtonsUI.display deployer_config: envs
 
-
-      messages = [
-        {
-          text: "*Trigger deployment:*",
-          status: "OK",
-        }, {
-          text: "",
-          attachments: panels,
-        }
-      ]
+      messages = []
+      messages << {
+        text: "*Trigger deployment:*",
+        status: "OK",
+      }
+      messages += panels
 
       {
         text: "",

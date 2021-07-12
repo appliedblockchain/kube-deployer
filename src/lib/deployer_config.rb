@@ -36,15 +36,17 @@ class DeployerConfig
   def deployer_config_transform(config)
     targets = {}
     config.each do |deploy_target_name, deploy_target_config|
+      deploy_target_name = deploy_target_name.to_sym
       conf = deploy_target_config.transform_keys &:to_sym
       stack_name = conf.f :project
       stack_name = stack_name.to_sym
+      deploy_target_project = transform_deploy_target_project deploy_target_name
       deploy_target_env = transform_deploy_target_env deploy_target_name
       conf[:deploy_target_name] = deploy_target_name
       conf[:deploy_target_env]  = deploy_target_env
-      targets[deploy_target_env] = {} unless targets[deploy_target_env]
-      targets[deploy_target_env][stack_name] = {} unless targets[deploy_target_env][stack_name]
-      targets[deploy_target_env][stack_name] = conf
+      targets[deploy_target_project] = {} unless targets[deploy_target_project]
+      targets[deploy_target_project][deploy_target_name] = {} unless targets[deploy_target_project][deploy_target_name]
+      targets[deploy_target_project][deploy_target_name] = conf
     end
     targets
   end
@@ -55,6 +57,10 @@ class DeployerConfig
   end
 
   private
+
+  def transform_deploy_target_project(deploy_target_name)
+    deploy_target_name.to_s.split("_")[0].to_sym
+  end
 
   def transform_deploy_target_env(deploy_target_name)
     deploy_target_name.to_s.split("_")[1..-1].join("_").to_sym
