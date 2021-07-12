@@ -13,4 +13,6 @@ group :development, :test do
   gem "rspec-core"
   gem "rspec-expectations"
   gem "rspec-mocks"
+  
+  gem "rerun", "~> 0.13.1"
 end
