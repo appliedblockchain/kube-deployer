@@ -40,12 +40,12 @@ class Build
   end
 
   def compose_build(container_name:)
-    dir = "vendor/app_repo/#{container_name}"
+    dir = "#{PATH}/vendor/app_repo/#{container_name}"
     ssh_exe "cd #{dir} && docker-compose build"
   end
 
   def compose_push(container_name:)
-    dir = "vendor/app_repo/#{container_name}"
+    dir = "#{PATH}/vendor/app_repo/#{container_name}"
     ssh_exe "cd #{dir} && docker-compose push"
   end
 

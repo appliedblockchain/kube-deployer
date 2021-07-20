@@ -24,7 +24,7 @@ module Slack
         idx += 1
         panels.push panel
       end
-      panels.sort_by!{ |panel| panel.fetch :text }
+      panels.sort_by!{ |panel| panel.f :text }
       panels
     end
 
@@ -43,8 +43,8 @@ module Slack
       colors = ["#323C8C", "#775500", "#1d4482", "#AA2299", "#00AADD", "#BBBBBB"]
       color = colors[panel_idx] || "#999999"
       deploy_targets.each do |deploy_target_name, deploy_target|
-        env_tag = deploy_target.fetch :env_tag
-        project = deploy_target.fetch :project
+        env_tag = deploy_target.f :env_tag
+        project = deploy_target.f :project
         button  = generate_button env_tag: env_tag, project: project, deploy_target: deploy_target
         buttons.push button unless [:production, :prod, :"sd-02"].include? env_tag
       end

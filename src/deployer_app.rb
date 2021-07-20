@@ -21,15 +21,14 @@ end
 
 module DeploymentRunner
 
-  def run_deployment(project:, env:)
-    Deployer.deploy
+  def run_deployment(project:, env_name:, username:)
+    Deployer.deploy project: project, env_name: env_name, username: username
   end
 
 end
 
 module SlackParams
   def get_deployment_params(r:)
-    p r.params.inspect
     payload = JSON.parse r.params.f "payload"
     action = payload.f("actions").first
 
@@ -112,6 +111,13 @@ class DeployerApp < Roda
       }.to_sym
     }
 
+    r.get("health") {
+      {
+        status: "ok",
+        timestamp: Time.now.to_i,
+      }.to_sym
+    }
+
     r.post("environments") {
       envs = Environment.all
       panels = Slack::ButtonsUI.display deployer_config: envs
@@ -130,13 +136,14 @@ class DeployerApp < Roda
     }
 
     r.post("deployment") {
-      project, env, user = get_deployment_params r: r
+      depl_params = get_deployment_params r: r
+      project, env, user = depl_params.f(:project), depl_params.f(:env), depl_params.f(:user)
       puts "params - PROJECT: #{project} - ENV: #{env} - DEPLOY_BY: #{user}"
 
       status_info = run_deployment(
         project: project,
-        environment: environment,
-        user: user,
+        env_name: env,
+        username: user,
       )
 
       deployment_ok = true

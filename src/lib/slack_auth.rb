@@ -34,7 +34,7 @@ module SlackAuth
     slack_signature = signature_header r: r
     hmac256 = slack_hash_payload payload: payload
     hmac256 = "v0=#{hmac256}"
-    r.halt 200, slack_wrong_secret_error_message) unless slack_signature == hmac256
+    r.halt 200, slack_wrong_secret_error_message unless slack_signature == hmac256
     true
   }
 

@@ -11,7 +11,7 @@ class Deploy
   def run(project:, env_name:)
     puts "Deployment starting..."
 
-    ssh_exe "cd vendor/app_repo && kubectl apply -f stack/"
+    ssh_exe "cd #{PATH}/vendor/app_repo && kubectl apply -f stack/"
   end
 
 end

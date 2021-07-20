@@ -1,5 +1,7 @@
 class DeployerConfig
 
+  include Utils
+
   DEPLOYER_CONFIG_PATH = File.expand_path "~/deployer_config.yml"
 
   # sample deployer config yml file:
@@ -54,16 +56,6 @@ class DeployerConfig
   def deployer_config_update
     # TODO: clone or pull deployer config repo, overwrite deployer config file in DEPLOYER_CONFIG_PATH with deploy.yml from the repo
     # raise "TODO"
-  end
-
-  private
-
-  def transform_deploy_target_project(deploy_target_name)
-    deploy_target_name.to_s.split("_")[0].to_sym
-  end
-
-  def transform_deploy_target_env(deploy_target_name)
-    deploy_target_name.to_s.split("_")[1..-1].join("_").to_sym
   end
 
 end
