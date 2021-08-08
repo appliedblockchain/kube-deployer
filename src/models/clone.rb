@@ -23,12 +23,12 @@ class Clone
 
   def clone_repo(project:, branch_name:)
     repo_name = project.f :github_repo
-    clone_ok = exe "cd #{vendor_dir} && git clone #{repo_url} app_repo"
+    clone_ok = exe "cd #{vendor_dir} && git clone #{repo_url repo_name: repo_name} app_repo"
     checkout_ok = exe "cd #{vendor_dir}/app_repo && git checkout #{branch_name}"
     clone_ok && checkout_ok
   end
 
-  def repo_url
+  def repo_url(repo_name:)
     "https://#{GITHUB_TOKEN}@github.com/#{ORG_NAME}/#{repo_name}.git"
   end
 
