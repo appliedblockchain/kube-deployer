@@ -39,6 +39,7 @@ require_relative "../lib/slack/buttons_ui"
 include NetLib
 include NotifySlack
 
+GITHUB_TOKEN = load_conf_file "github_token"
 # DEPLOYER_HOST = load_conf_file "host"
 
 ORG_NAME = "appliedblockchain"
