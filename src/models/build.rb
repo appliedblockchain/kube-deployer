@@ -7,9 +7,9 @@ class Build
   end
 
   def run(project:, containers:)
-    puts "Building containers for project #{project}"
+    puts "Building containers for project #{project.f :project}"
     build_containers containers: containers
-    puts "Pushing containers for project #{project}"
+    puts "Pushing containers for project #{project.f :project}"
     push_containers containers: containers
   end
 
@@ -41,12 +41,12 @@ class Build
 
   def compose_build(container_name:)
     dir = "#{PATH}/vendor/app_repo/#{container_name}"
-    ssh_exe "cd #{dir} && docker-compose build"
+    exe "cd #{dir} && docker-compose build"
   end
 
   def compose_push(container_name:)
     dir = "#{PATH}/vendor/app_repo/#{container_name}"
-    ssh_exe "cd #{dir} && docker-compose push"
+    exe "cd #{dir} && docker-compose push"
   end
 
 end

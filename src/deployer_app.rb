@@ -22,7 +22,8 @@ end
 module DeploymentRunner
 
   def run_deployment(project:, env_name:, username:)
-    Deployer.deploy project: project, env_name: env_name, username: username
+    # schedule async job
+    DeployJob.perform_async project: project, env_name: env_name, username: username
   end
 
 end
@@ -150,7 +151,7 @@ class DeployerApp < Roda
 
       if deployment_ok
         {
-          message: "deployment ok",
+          text: "Deployment started - Check the status in #kube_deployments",
         }
       else
         status 400

@@ -9,33 +9,42 @@ module NotifySlack
   end
 
   def notify_slack_step(step:)
-    return unless NOTIFY_SLACK
     json = {
       text: "↪ Deployment step: '#{step}' passed",
     }
     notify_slack_post json
   end
 
-  def notify_slack_done(status:)
-    return unless NOTIFY_SLACK
-    json = { text: "🚀 App deployed - #{APP_URLS_NOTE}" }
-    json = { text: notify_slack_error_msg } if status == "DOWN"
+  def notify_slack_step_failed(step:)
+    json = {
+      text: "🔴 Deployment Error: 💥 '#{step}' failed 💥 - (cc #{DEVOPS_PERSON})",
+    }
     notify_slack_post json
   end
 
-  def notify_slack_error(status:, message:)
-    return unless NOTIFY_SLACK
-    json = { text: "🔴 Deployer Error: #{message}" }
+  def notify_slack_deployer_error
+    json = {
+      text: "🔴 Deployer Internal Error: 💥 (cc #{DEVOPS_USERNAME})",
+    }
+    notify_slack_post json
+  end
+
+  def notify_slack_done(project_env:)
+    url = "#{Healthcheck::PROTO}://#{project_env.f :hostname}"
+    json = { text: "🚀 App deployed - #{url}" }
     notify_slack_post json
   end
 
   private
 
   def notify_slack_post(json)
+    return unless NOTIFY_SLACK
     slack_url = SLACK_HOOK_URL
     resp = post slack_url, json
-    puts "POST response from slack:"
-    puts resp
+    if DEBUG
+      puts "POST response from slack:"
+      puts resp.inspect
+    end
     resp
   end
 

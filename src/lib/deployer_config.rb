@@ -1,17 +1,19 @@
 class DeployerConfig
 
   include Utils
+  include ExeLib
 
   DEPLOYER_CONFIG_PATH = File.expand_path "~/deployer_config.yml"
+  CONFIG_TMP_PATH      = File.expand_path "#{PATH}/deployer_config"
 
   # sample deployer config yml file:
   #
-  # launchpad: # project name
+  # launchpad_dev: # project name
   #   project: launchpad # project name (again)
   #   env_tag: dev # staging / production
   #   github_repo: launchpad-kube # github.com/appliedblockchain/GITHUB_REPO
   #   branch_name: master
-  #   domain: launchpad.appb.ch # url to reach the ingress / load balancer
+  #   hostname: launchpad.appb.ch # url to reach the ingress / load balancer
   #   containers: # list of containers that need to be built by the build server
   #     - name: launchpad-api
   #       dir: api
@@ -54,8 +56,14 @@ class DeployerConfig
   end
 
   def deployer_config_update
-    # TODO: clone or pull deployer config repo, overwrite deployer config file in DEPLOYER_CONFIG_PATH with deploy.yml from the repo
-    # raise "TODO"
+    exe "rm -f #{DEPLOYER_CONFIG_PATH}"
+    exe "rm -rf #{CONFIG_TMP_PATH}"
+    exe "git clone #{deployer_config_git_uri} #{CONFIG_TMP_PATH}"
+    exe "cp #{CONFIG_TMP_PATH}/stacks.yml #{DEPLOYER_CONFIG_PATH}"
+  end
+
+  def deployer_config_git_uri
+    "git@github.com:appliedblockchain/kube-deployer-config.git"
   end
 
 end

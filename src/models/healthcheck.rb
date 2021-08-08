@@ -1,16 +1,19 @@
 class Healthcheck
 
-  URL_INGRESS = "/health"
   URL_API = "/api/health"
-  URL_REACT = "/health_react"
+  URL_REACT = "/health"
+  # URL_INGRESS = "/health"
+  # URL_REACT = "/health_react"
 
   URLS = {
-    ingress:  URL_INGRESS,
+    # ingress:  URL_INGRESS,
     api:      URL_API,
     react:    URL_REACT,
   }
 
   NET = Excon
+
+  PROTO = "https"
 
   attr_reader :host
 
@@ -32,6 +35,8 @@ class Healthcheck
       url = "#{@host}#{url}"
       if code = healthcheck_failing(url: url)
         error[:check] = { url: url, status_code: code, container: container }
+        puts "healthcheck errored:"
+        puts error.to_yaml
         return error
       end
     end
@@ -40,13 +45,16 @@ class Healthcheck
 
   def healthcheck_failing(url:)
     resp = http_get url: url
-    return resp.status if resp.status != 200
+    return resp.status.to_s if resp.status != 200
     return false
+  rescue Excon::Error::Timeout => err
+    return "timeout"
   end
 
   private
 
   def http_get(url:)
+    url = "#{PROTO}://#{url}"
     NET.get url
   end
 

@@ -11,8 +11,3 @@ end
 # notes
 
 # notify_slack_start branch_name: nil, slack_user: "makevoid", project: "kubetest", environment: "ab"
-
-# clone repo
-# build each container with compose
-
-# repo_url: "https://github.com/appliedblockchain/PROJECT_NAME"
