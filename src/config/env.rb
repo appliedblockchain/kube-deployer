@@ -39,7 +39,7 @@ require_relative "../lib/slack/buttons_ui"
 include NetLib
 include NotifySlack
 
-DEPLOYER_HOST = load_conf_file "host"
+# DEPLOYER_HOST = load_conf_file "host"
 
 ORG_NAME = "appliedblockchain"
 
