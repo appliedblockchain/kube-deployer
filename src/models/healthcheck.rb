@@ -47,7 +47,7 @@ class Healthcheck
     resp = http_get url: url
     return resp.status.to_s if resp.status != 200
     return false
-  rescue Excon::Error::Timeout => err
+  rescue Excon::Error::Timeout, Excon::Error::Socket => err
     return "timeout"
   end
 
