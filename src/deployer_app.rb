@@ -151,7 +151,7 @@ class DeployerApp < Roda
 
       if deployment_ok
         {
-          text: "Deployment started - Check the status in #kube_deployments",
+          text: "Deployment started - Check the status in #kube-deployments",
         }
       else
         status 400
