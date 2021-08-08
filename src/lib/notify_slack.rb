@@ -24,7 +24,7 @@ module NotifySlack
 
   def notify_slack_deployer_error
     json = {
-      text: "🔴 Deployer Internal Error: 💥 (cc #{DEVOPS_USERNAME})",
+      text: "🔴 Deployer Internal Error: 💥 (cc #{DEVOPS_PERSON})",
     }
     notify_slack_post json
   end
