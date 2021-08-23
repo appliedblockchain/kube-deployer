@@ -10,6 +10,7 @@ class Deploy
     puts "Deployment starting..."
 
     puts "Switch kubectl context"
+    context_name = project.f :context_name
     context_switch_ok = exe "kubectx #{context_name}"
 
     kube_ctx = exe_r "kubectx -c"
