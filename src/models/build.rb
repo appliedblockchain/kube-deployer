@@ -11,6 +11,7 @@ class Build
     build_containers containers: containers
     puts "Pushing containers for project #{project.f :project}"
     push_containers containers: containers
+    # TODO: raise exceptions
   end
 
   private
