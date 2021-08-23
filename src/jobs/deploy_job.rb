@@ -1,5 +1,6 @@
 class DeployJob
   include SuckerPunch::Job
+  workers 1
   max_jobs 1
 
   def perform(project:, env_name:, username:)
