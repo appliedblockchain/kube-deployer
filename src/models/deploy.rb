@@ -13,7 +13,7 @@ class Deploy
     context_name = project.f :kube_context
     context_switch_ok = exe "kubectx #{context_name}"
 
-    kube_ctx = exe_r "kubectx -c"
+    kube_ctx = r_exe "kubectx -c"
     context_matches = kube_ctx == context_name
     raise "KubeContextSwitchFailedError" if context_switch_ok && context_matches
 
