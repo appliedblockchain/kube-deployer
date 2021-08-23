@@ -42,8 +42,7 @@ module NotifySlack
     slack_url = SLACK_HOOK_URL
     resp = post slack_url, json
     if DEBUG
-      puts "POST response from slack:"
-      puts resp.inspect
+      puts "Response from slack - status: #{resp.status}"
     end
     resp
   end
