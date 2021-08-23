@@ -8,10 +8,12 @@ class Build
 
   def run(project:, containers:)
     puts "Building containers for project #{project.f :project}"
-    build_containers containers: containers
+    built_ok = build_containers containers: containers
+    # TODO: raise a better exception so we need which container failed to build
+    return false unless build_ok
     puts "Pushing containers for project #{project.f :project}"
-    push_containers containers: containers
-    # TODO: raise exceptions
+    push_ok = push_containers containers: containers
+    push_ok
   end
 
   private
@@ -20,16 +22,20 @@ class Build
     containers.each do |container_name|
       puts "Building container #{container_name}"
       container_name = container_name.f :dir
-      build_container container_name: container_name
+      built_ok = build_container container_name: container_name
+      return false unless built_ok
     end
+    true
   end
 
   def push_containers(containers:)
     containers.each do |container_name|
       puts "Pushing container #{container_name}"
       container_name = container_name.f :dir
-      push_container container_name: container_name
+      push_ok = push_container container_name: container_name
+      return false unless push_ok
     end
+    true
   end
 
   def push_container(container_name:)
