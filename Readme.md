@@ -6,6 +6,7 @@ Rewrite of docker swarm deployer (to be open sourced) adapted for Kubernetes.
 
 - Ruby 2+ installed (Ruby 3 recommended)
 - bundler installed (`gem i bundler`)
+- `kubectx` installed (`apt install kubectx`)
 
 ### Setup
 
