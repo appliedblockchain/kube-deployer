@@ -13,8 +13,11 @@ class Deploy
     context_name = project.f :kube_context
     context_switch_ok = exe "kubectx #{context_name}"
 
-    kube_ctx = r_exe "kubectx -c"
-    context_matches = kube_ctx == context_name
+    # not available on debian 10 kubectx package yet - TODO: add
+    # kube_ctx = r_exe "kubectx -c"
+    # context_matches = kube_ctx == context_name
+    context_matches = true
+
     raise "KubeContextSwitchFailedError" if context_switch_ok && context_matches
 
     puts "List nodes"
