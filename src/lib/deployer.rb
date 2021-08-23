@@ -61,7 +61,8 @@ class Deployer
   end
 
   def build(project_env:, containers:)
-    build_ok = Build.run project: project_env, containers: containers unless SKIP_BUILD
+    return if SKIP_BUILD
+    build_ok = Build.run project: project_env, containers: containers
     raise DeploymentStepFailed.new step_name: "build" unless build_ok
     notify_slack_step step: "build"
   end

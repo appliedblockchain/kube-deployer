@@ -13,6 +13,8 @@ DEBUG = false # prints some debugging messages
 # SKIP_BUILD = true # use this only in testing / development - skips the build when you just want to test repeated deployments
 SKIP_BUILD = false # TODO: switch to this in production
 
+Thread.abort_on_exception = true
+
 require_relative "../lib/conf_load"
 CONF_FILE_PREFIX = "kube_deployer"
 include ConfLoad
