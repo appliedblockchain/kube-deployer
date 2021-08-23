@@ -9,6 +9,13 @@ class Deploy
   def run(project:, env_name:)
     puts "Deployment starting..."
 
+    puts "Switch kubectl context"
+    context_switch_ok = exe "kubectx #{context_name}"
+
+    kube_ctx = exe_r "kubectx -c"
+    context_matches = kube_ctx == context_name
+    raise "KubeContextSwitchFailedError" if context_switch_ok && context_matches
+
     puts "List nodes"
     nodes_ok = exe "kubectl get nodes"
 
