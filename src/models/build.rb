@@ -8,7 +8,7 @@ class Build
 
   def run(project:, containers:)
     puts "Building containers for project #{project.f :project}"
-    built_ok = build_containers containers: containers
+    build_ok = build_containers containers: containers
     # TODO: raise a better exception so we need which container failed to build
     return false unless build_ok
     puts "Pushing containers for project #{project.f :project}"
