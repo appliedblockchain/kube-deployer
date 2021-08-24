@@ -18,7 +18,7 @@ class Deploy
     # context_matches = kube_ctx == context_name
     context_matches = true
 
-    raise "KubeContextSwitchFailedError" if context_switch_ok && context_matches
+    raise "KubeContextSwitchFailedError" if !context_switch_ok && context_matches
 
     puts "List nodes"
     nodes_ok = exe "kubectl get nodes"
