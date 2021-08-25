@@ -55,8 +55,7 @@ class Healthcheck
     timer = Time.now - time_start
     return "timeout-retry" if timer > RETRY_TIMEOUT
     return status
-  rescue HealthcheckFailed502 => err
-    puts "healthcheck - got 502 - url: #{url}"
+  rescue HealthcheckFailed502, HealthcheckFailedTimeout => err
     sleep 0.5
     retry
   end
