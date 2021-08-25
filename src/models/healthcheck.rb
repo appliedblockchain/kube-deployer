@@ -18,6 +18,9 @@ class Healthcheck
   }
 
   NET = Excon
+  NET.defaults[:connect_timeout] = 3
+  NET.defaults[:read_timeout]    = 3
+  NET.defaults[:write_timeout]   = 5
 
   PROTO = "https"
   PROTO = "http" # TODO: switch to https
