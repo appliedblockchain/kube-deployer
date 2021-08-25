@@ -63,6 +63,7 @@ class Healthcheck
     return "timeout-retry" if timer > RETRY_TIMEOUT
     return status
   rescue HealthcheckFailed502, HealthcheckFailed301, HealthcheckFailedTimeout => err
+    puts "retry"
     sleep 0.5
     retry
   end
@@ -71,7 +72,7 @@ class Healthcheck
     resp = http_get url: url
     raise HealthcheckFailed502 if resp.status == 502
     raise HealthcheckFailed301 if resp.status == 301
-    return resp.status.to_s if resp.status != 200
+    return resp.status.to_s    if resp.status != 200
     return false # healthcheck ok
   rescue Excon::Error::Timeout, Excon::Error::Socket => err
     raise HealthcheckFailedTimeout
