@@ -1,4 +1,5 @@
 class HealthcheckFailed502 < RuntimeError; end
+class HealthcheckFailed301 < RuntimeError; end
 class HealthcheckFailedTimeout < RuntimeError; end
 
 class Healthcheck
@@ -55,7 +56,7 @@ class Healthcheck
     timer = Time.now - time_start
     return "timeout-retry" if timer > RETRY_TIMEOUT
     return status
-  rescue HealthcheckFailed502, HealthcheckFailedTimeout => err
+  rescue HealthcheckFailed502, HealthcheckFailed301, HealthcheckFailedTimeout => err
     sleep 0.5
     retry
   end
@@ -63,6 +64,7 @@ class Healthcheck
   def healthcheck_failing_http(url:)
     resp = http_get url: url
     raise HealthcheckFailed502 if resp.status == 502
+    raise HealthcheckFailed301 if resp.status == 301
     return resp.status.to_s if resp.status != 200
     return false # healthcheck ok
   rescue Excon::Error::Timeout, Excon::Error::Socket => err
