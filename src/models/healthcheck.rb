@@ -13,7 +13,7 @@ class Healthcheck
   URLS = {
     # ingress:  URL_INGRESS,
     api:      URL_API,
-    react:    URL_REACT,
+    # react:    URL_REACT,
   }
 
   NET = Excon
