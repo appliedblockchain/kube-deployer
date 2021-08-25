@@ -76,7 +76,7 @@ class Deployer
   def healthcheck(project_env:)
     host = project_env.f :hostname
     healthcheck_fail = Healthcheck.check host: host
-    raise DeploymentStepFailed.new step_name: "healthcheck" unless healthcheck_fail
+    raise DeploymentStepFailed.new step_name: "healthcheck" if healthcheck_fail
     puts "healthcheck ok"
     notify_slack_step step: "healthcheck"
     true
