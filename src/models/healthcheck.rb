@@ -41,6 +41,7 @@ class Healthcheck
     error = { status: :ERROR, message: "Healthcheck error", check: nil }
     URLS.each do |container, url|
       url = "#{@host}#{url}"
+      puts "checking url: #{url}"
       if code = healthcheck_failing(url: url)
         error[:check] = { url: url, status_code: code, container: container }
         puts "healthcheck errored:"
@@ -55,7 +56,8 @@ class Healthcheck
     time_start ||= Time.now
     status = healthcheck_failing_http url: url
     timer = Time.now - time_start
-    return "timeout-retry" if timer < RETRY_TIMEOUT
+    puts "status: #{status} - #{timer}"
+    return "timeout-retry" if timer > RETRY_TIMEOUT
     return status
   rescue HealthcheckFailed502, HealthcheckFailed301, HealthcheckFailedTimeout => err
     sleep 0.5
