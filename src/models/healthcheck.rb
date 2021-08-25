@@ -14,7 +14,7 @@ class Healthcheck
   URLS = {
     # ingress:  URL_INGRESS,
     api:      URL_API,
-    # react:    URL_REACT,
+    react:    URL_REACT,
   }
 
   NET = Excon
@@ -57,12 +57,12 @@ class Healthcheck
   def healthcheck_failing(url:)
     @time_start ||= Time.now
     status = healthcheck_failing_http url: url
-    puts "status: #{status}"
+    puts "healthcheck failed/status: #{status}"
     return status
   rescue HealthcheckFailed502, HealthcheckFailed301, HealthcheckFailedTimeout => err
     timer = Time.now - @time_start
     return "timeout-retry" if timer > RETRY_TIMEOUT
-    puts "retry - #{err.class}"
+    puts "retry - #{err.class}" if DEBUG
     sleep 0.5
     retry
   end
