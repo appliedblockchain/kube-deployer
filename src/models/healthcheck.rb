@@ -3,7 +3,7 @@ class HealthcheckFailedTimeout < RuntimeError; end
 
 class Healthcheck
 
-  RETRY_TIMEOUT = 8 # seconds - consider a deployment failed if the container(s) are not up after (8) seconds
+  RETRY_TIMEOUT = 15 # seconds - consider a deployment failed if the container(s) are not up after (8) seconds
 
   URL_API = "/api/health"
   URL_REACT = "/health"
