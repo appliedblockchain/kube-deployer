@@ -23,7 +23,6 @@ class Healthcheck
   NET.defaults[:write_timeout]   = 5
 
   PROTO = "https"
-  PROTO = "http" # TODO: switch to https
 
   attr_reader :host
 
