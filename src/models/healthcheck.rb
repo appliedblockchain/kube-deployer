@@ -33,6 +33,7 @@ class Healthcheck
   end
 
   def check
+    puts "Healthcheck starting..."
     check_all
   end
 

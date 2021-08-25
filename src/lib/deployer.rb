@@ -78,6 +78,7 @@ class Deployer
     healthcheck_fail = Healthcheck.check host: host
     raise DeploymentStepFailed.new step_name: "healthcheck" if healthcheck_fail
     notify_slack_step step: "healthcheck"
+    true
   end
 
   # utils
