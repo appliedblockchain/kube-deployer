@@ -4,7 +4,7 @@ class HealthcheckFailedTimeout < RuntimeError; end
 
 class Healthcheck
 
-  RETRY_TIMEOUT = 120 # seconds - consider a deployment failed if the container(s) are not up after (8) seconds
+  RETRY_TIMEOUT = 90 # seconds - consider a deployment failed if the container(s) are not up after (8) seconds
 
   URL_API = "/api/health"
   URL_REACT = "/health"
@@ -48,14 +48,14 @@ class Healthcheck
         return error
       end
     end
-    { status: :ok, message: "healthcheck ok", check: nil }
+    false
   end
 
   def healthcheck_failing(url:)
     time_start ||= Time.now
     status = healthcheck_failing_http url: url
     timer = Time.now - time_start
-    return "timeout-retry" if timer > RETRY_TIMEOUT
+    return "timeout-retry" if timer < RETRY_TIMEOUT
     return status
   rescue HealthcheckFailed502, HealthcheckFailed301, HealthcheckFailedTimeout => err
     sleep 0.5
