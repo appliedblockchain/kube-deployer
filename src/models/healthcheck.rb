@@ -60,10 +60,10 @@ class Healthcheck
     status = healthcheck_failing_http url: url
     timer = Time.now - time_start
     puts "status: #{status} - #{timer}"
-    return "timeout-retry" if timer > RETRY_TIMEOUT
     return status
   rescue HealthcheckFailed502, HealthcheckFailed301, HealthcheckFailedTimeout => err
-    puts "retry"
+    return "timeout-retry" if timer > RETRY_TIMEOUT
+    puts "retry - #{err.class}"
     sleep 0.5
     retry
   end
