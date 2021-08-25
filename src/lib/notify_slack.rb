@@ -31,7 +31,7 @@ module NotifySlack
 
   def notify_slack_done(project_env:)
     url = "#{Healthcheck::PROTO}://#{project_env.f :hostname}"
-    json = { text: "🚀 App deployed - #{url}#{Healthcheck::URL_API} - #{url}" }
+    json = { text: "🚀 *App deployed* - #{url}#{Healthcheck::URL_API} - #{url}" }
     notify_slack_post json
   end
 
