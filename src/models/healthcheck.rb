@@ -1,4 +1,5 @@
 class HealthcheckFailed502 < RuntimeError; end
+class HealthcheckFailedTimeout < RuntimeError; end
 
 class Healthcheck
 
@@ -64,9 +65,9 @@ class Healthcheck
     resp = http_get url: url
     raise HealthcheckFailed502 if resp.status == 502
     return resp.status.to_s if resp.status != 200
-    return false # healthcheck not
+    return false # healthcheck ok
   rescue Excon::Error::Timeout, Excon::Error::Socket => err
-    return "timeout"
+    raise HealthcheckFailedTimeout
   end
 
   private
