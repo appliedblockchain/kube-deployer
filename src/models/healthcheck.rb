@@ -14,6 +14,7 @@ class Healthcheck
   NET = Excon
 
   PROTO = "https"
+  PROTO = "http" # TODO: switch to https
 
   attr_reader :host
 
