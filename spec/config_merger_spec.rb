@@ -38,7 +38,7 @@ services:
     def merger.override_dir
       "#{tmp_path}/overrides"
     end
-    def merger.stacks_path
+    def merger.stack_path
       tmp_path
     end
     @merger = merger

@@ -11,12 +11,12 @@ class ConfigMerger
     @env_name = env_name
   end
 
-  def stacks_path
-    "#{PATH}/vendor/app_repo/stacks" # TODO
+  def stack_path
+    "#{PATH}/vendor/app_repo/stack"
   end
 
   def override_dir
-    "#{stacks_path}/overrides/#{@env_name}"
+    "#{stack_path}/overrides/#{@env_name}"
   end
 
   def run
@@ -49,11 +49,11 @@ class ConfigMerger
   end
 
   def write_config(conf:, file_name:)
-    File.open "#{stacks_path}/#{file_name}"
+    File.open "#{stack_path}/#{file_name}"
   end
 
   def source_yml_files
-    Dir.glob "#{stacks_path}/*.yml"
+    Dir.glob "#{stack_path}/*.yml"
   end
 
   def override_dir_exists?
