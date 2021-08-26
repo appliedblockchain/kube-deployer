@@ -36,6 +36,7 @@ require_relative "../models/clone"
 require_relative "../models/build"
 require_relative "../models/deploy"
 require_relative "../models/healthcheck"
+require_relative "../models/config_merger"
 require_relative "../lib/slack/buttons_ui"
 
 include NetLib

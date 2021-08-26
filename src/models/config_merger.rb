@@ -30,25 +30,25 @@ class ConfigMerger
   private
 
   def merge_yml_file(source_file:, file_name:)
-    source_yml = YAML.load_file source_file
-    override_yml = load_override source_file: source_file, file_name: file_name
-    merged_config = merge_config source: source_file, override: override_file
+    source_yml    = YAML.load_file source_file
+    override_yml  = load_override source_file: source_file, file_name: file_name
+    merged_config = merge_config source: source_yml, override: override_yml
     write_config conf: merged_config, file_name: file_name
+    merged_config
   end
 
   def load_override(source_file:, file_name:)
     override_file_path = "#{override_dir}/#{file_name}"
     YAML.load_file override_file_path
-    override_file
   end
 
   def merge_config(source:, override:)
-    conf = source.deep_merge
-    conf = conf.to_yaml
+    conf = source.deep_merge override
+    conf.to_yaml
   end
 
   def write_config(conf:, file_name:)
-    File.open("#{PATH}/stack")
+    File.open "#{stacks_path}/#{file_name}"
   end
 
   def source_yml_files

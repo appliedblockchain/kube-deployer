@@ -19,6 +19,7 @@ services:
   "
 
   YAML_OUTPUT = "
+---
 services:
   app:
     image: antani:staging
@@ -27,25 +28,26 @@ services:
     - B
   "
 
-  def tmp_path
-
-  end
-
   before :all do
-    File.write "#{PATH}/tmp/yaml_source.yml",   YAML_SOURCE
-    File.write "#{PATH}/tmp/yaml_override.yml", YAML_OVERRIDE
-    File.write "#{PATH}/tmp/yaml_output.yml",   YAML_OUTPUT
+    puts `mkdir -p #{tmp_path}/overrides`
+    File.write "#{tmp_path}/yaml_source.yml",   YAML_SOURCE
+    File.write "#{tmp_path}/overrides/yaml_source.yml", YAML_OVERRIDE
+
+    project = {}
+    merger = ConfigMerger.new project: project, env_name: "staging"
+    def merger.override_dir
+      "#{tmp_path}/overrides"
+    end
+    def merger.stacks_path
+      tmp_path
+    end
+    @merger = merger
   end
 
   it "merges two yamls" do
-    source    = "#{PATH}/tmp/yaml_source.yml"
-    override  = "#{PATH}/tmp/yaml_override.yml"
-    output    = "#{PATH}/tmp/yaml_output.yml"
-    merger = ConfigMerger.new
-    def merger.override_dir
-      "#{PATH}/tmp"
-    end
-    merger.merge_yml_file source_file: source, file_name: "yaml_source.yml"
+    source    = "#{tmp_path}/yaml_source.yml"
+    output = @merger.send :merge_yml_file, source_file: source, file_name: "yaml_source.yml"
+    output.should == "#{YAML_OUTPUT.strip}\n"
   end
 
 end
