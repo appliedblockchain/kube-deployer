@@ -70,7 +70,7 @@ class Deployer
   end
 
   def merge_config(project_env:, env_name:)
-    override_option     = project_env.f :override_yml
+    override_option     = project_env[:override_yml]
     config_not_present  = !override_option || override_option.empty?
     return if config_not_present
     ConfigMerger.run project: project_env, env_name: env_name
