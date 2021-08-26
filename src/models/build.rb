@@ -70,7 +70,7 @@ class Build
   def apply_override(container_name:, env_name:)
     path = "#{dir container_name}/docker-compose.yml"
     compose_conf = YAML.load_file path
-    service = yaml.f("services").values.f(0)
+    service = compose_conf.f("services").values.f(0)
     service["image"] = replace_tag_name image: service["image"], env_tag: env_name
     File.write path, compose_conf.to_yaml
   end
