@@ -80,7 +80,7 @@ class Build
   end
 
   def dir(container_name)
-    "#{PATH}/vendor/app_repo/#{container_name}"
+    "#{PATH}/vendor/app_repo/#{container_name.f :dir}"
   end
 
 end
