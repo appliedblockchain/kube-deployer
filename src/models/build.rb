@@ -26,6 +26,7 @@ class Build
     return true if config_not_present
     containers.each do |container_name|
       puts "Applying overrides to container #{container_name}"
+      container_name = container_name.f :dir
       apply_override container_name: container_name, env_name: env_name
     end
     true
@@ -80,7 +81,7 @@ class Build
   end
 
   def dir(container_name)
-    "#{PATH}/vendor/app_repo/#{container_name.f :dir}"
+    "#{PATH}/vendor/app_repo/#{container_name}"
   end
 
 end
