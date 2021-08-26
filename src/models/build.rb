@@ -7,7 +7,7 @@ class Build
   end
 
   def run(project:, containers:, env_name:)
-    overrides_ok = apply_overrides project: project
+    overrides_ok = apply_overrides project: project, containers: containers
     return false unless overrides_ok
     puts "Building containers for project #{project.f :project}"
     build_ok = build_containers containers: containers
@@ -20,7 +20,7 @@ class Build
 
   private
 
-  def apply_overrides(project:)
+  def apply_overrides(project:, containers:)
     override_option = project[:override_yml]
     config_not_present  = !override_option || override_option.to_s.empty?
     return true if config_not_present
