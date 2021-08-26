@@ -40,6 +40,8 @@ class Deployer
 
     build project_env: project_env, containers: containers
 
+    merge_config project_env: project_env, env_name: env_name
+
     deployment project_env: project_env, env_name: env_name
 
     healthcheck project_env: project_env
@@ -65,6 +67,13 @@ class Deployer
     build_ok = Build.run project: project_env, containers: containers
     raise DeploymentStepFailed.new step_name: "build" unless build_ok
     notify_slack_step step: "build"
+  end
+
+  def merge_config(project_env:, env_name:)
+    override_option     = project_env.f :override_yml
+    config_not_present  = !override_option || override_option.empty?
+    return if config_not_present
+    ConfigMerger.run project: project_env, env_name: env_name
   end
 
   def deployment(project_env:, env_name:)

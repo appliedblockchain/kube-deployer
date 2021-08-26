@@ -23,6 +23,34 @@ Rewrite of docker swarm deployer (to be open sourced) adapted for Kubernetes.
 
     rake specs
 
+### Deployer Slack slash commands
+
+#### `/deploy` - executes a kubectl deployment
+
+This bot has only one command, `/deploy` which executes a deployment using `kubectl`, the server where the deployer is installed requires to have access to perform the Kubernetes updates applied in the configuration.
+ 
+
+### Deployer configuration repo
+
+Define your environments in a separate repo with a single YAML file
+
+```yml
+launchpad_dev: # project name
+  project: launchpad # project name (again)
+  env_tag: dev # staging / production
+  github_repo: launchpad-kube # github.com/appliedblockchain/GITHUB_REPO
+  branch_name: master
+  hostname: launchpad.appb.ch # url to reach the ingress / load balancer
+  containers: # list of containers that need to be built by the build server
+    - name: launchpad-api
+      dir: api
+    - name: launchpad-react
+      dir: react
+launchpad_staging:
+  project: launchpad
+  env_tag: staging
+  # ...
+```
 
 ### Slack configuration:
 

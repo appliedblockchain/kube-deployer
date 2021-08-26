@@ -14,6 +14,8 @@ class DeployerConfig
   #   github_repo: launchpad-kube # github.com/appliedblockchain/GITHUB_REPO
   #   branch_name: master
   #   hostname: launchpad.appb.ch # url to reach the ingress / load balancer
+  #   kube_context: dev # (optional) kubectx (kubectl) context for the environment
+  #   override_yml: true # (optional) use override YAML files that get merged to the main YAML and override it (use dir: stack/overrides/ENV_TAG to place your override yml files, the files need to be named with the same filename as the source files)
   #   containers: # list of containers that need to be built by the build server
   #     - name: launchpad-api
   #       dir: api

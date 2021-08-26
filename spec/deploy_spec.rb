@@ -19,7 +19,7 @@ describe "Deploy - Main spec" do
       project:      "launchpad",
       github_repo:  "launchpad-kube",
     }
-    Clone.run project: project
+    Clone.run project: project, branch_name: "master"
     File.exists?(File.expand_path "#{PATH}/vendor/app_repo/stack/api-deployment.yaml").should be true
   end
 
