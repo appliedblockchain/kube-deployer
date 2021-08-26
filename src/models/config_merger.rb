@@ -20,6 +20,7 @@ class ConfigMerger
   end
 
   def run
+    puts "override dir: #{override_dir}"
     raise OverrideDirNotFoundError unless override_dir_exists? # TODO: catch and output a slack text error message instead of a 500 (current behaviour)
     source_yml_files.each do |source_file|
       file_name = File.basename source_file
