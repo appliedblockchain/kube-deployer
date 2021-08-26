@@ -21,7 +21,7 @@ class Build
   private
 
   def apply_overrides(project:)
-    use_overrides = project_env[:override_yml]
+    use_overrides = project[:override_yml]
     config_not_present  = !override_option || override_option.to_s.empty?
     return true if config_not_present
     containers.each do |container_name|
