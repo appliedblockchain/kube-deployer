@@ -38,7 +38,7 @@ class Deployer
   def run_deployment_steps(project_env:, branch_name:, containers:, env_name:)
     clone project_env: project_env, branch_name: branch_name
 
-    build project_env: project_env, containers: containers, env_name:
+    build project_env: project_env, containers: containers, env_name: env_name
 
     merge_config project_env: project_env, env_name: env_name
 
