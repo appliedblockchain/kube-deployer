@@ -62,9 +62,9 @@ class Deployer
     notify_slack_step step: "clone"
   end
 
-  def build(project_env:, containers:)
+  def build(project_env:, containers:, env_name:)
     return if SKIP_BUILD
-    build_ok = Build.run project: project_env, containers: containers
+    build_ok = Build.run project: project_env, containers: containers, env_name: env_name
     raise DeploymentStepFailed.new step_name: "build" unless build_ok
     notify_slack_step step: "build"
   end
