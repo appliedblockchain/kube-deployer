@@ -8,6 +8,9 @@ services:
     image: antani:latest
     environment:
     - A
+  apps:
+  - image: one:latest
+    name: one
   "
 
   YAML_OVERRIDE = "
@@ -16,6 +19,9 @@ services:
     image: antani:staging
     environment:
     - B
+  apps:
+  - image: one:staging
+    name: one
   "
 
   YAML_OUTPUT = "
@@ -26,6 +32,9 @@ services:
     environment:
     - A
     - B
+  apps:
+  - image: one:staging
+    name: one
   "
 
   before :all do
