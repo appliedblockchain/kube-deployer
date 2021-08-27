@@ -37,10 +37,14 @@ class ConfigMerger
     return unless override_file_exists? override_file_path
     override_yml  = load_override override_file_path: override_file_path
     merged_config = merge_config source: source_yml, override: override_yml
-    puts "merged_config:"
-    puts merged_config
+    debug_merge_config_info merged_config if DEBUG
     write_config conf: merged_config, file_name: file_name
     merged_config
+  end
+
+  def debug_merge_config_info(merged_config)
+    puts "\nDEBUG - merged_config:"
+    puts "#{merged_config}\n"
   end
 
   def override_file_exists?(override_file_path)
