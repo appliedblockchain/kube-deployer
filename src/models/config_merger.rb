@@ -26,20 +26,26 @@ class ConfigMerger
       file_name = File.basename source_file
       merge_yml_file source_file: source_file, file_name: file_name
     end
+    true
   end
 
   private
 
   def merge_yml_file(source_file:, file_name:)
     source_yml    = YAML.load_file source_file
-    override_yml  = load_override source_file: source_file, file_name: file_name
+    override_file_path = "#{override_dir}/#{file_name}"
+    return unless override_file_exists? override_file_path
+    override_yml  = load_override override_file_path: override_file_path
     merged_config = merge_config source: source_yml, override: override_yml
     write_config conf: merged_config, file_name: file_name
     merged_config
   end
 
-  def load_override(source_file:, file_name:)
-    override_file_path = "#{override_dir}/#{file_name}"
+  def override_file_exists?(override_file_path)
+    File.exists? override_file_path
+  end
+
+  def load_override(override_file_path:)
     YAML.load_file override_file_path
   end
 
