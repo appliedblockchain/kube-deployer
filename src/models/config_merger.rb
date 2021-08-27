@@ -34,6 +34,8 @@ class ConfigMerger
     source_yml    = YAML.load_file source_file
     override_yml  = load_override source_file: source_file, file_name: file_name
     merged_config = merge_config source: source_yml, override: override_yml
+    puts "merged config:"
+    puts merged_config
     write_config conf: merged_config, file_name: file_name
     merged_config
   end
