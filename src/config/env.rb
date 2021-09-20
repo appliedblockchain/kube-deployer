@@ -9,6 +9,7 @@ HOST_MODE = true # use only in development
 # HOST_MODE = false # TODO: switch to this in production
 
 DEBUG = false # prints some debugging messages
+DEBUG = true
 
 # SKIP_BUILD = true # use this only in testing / development - skips the build when you just want to test repeated deployments
 SKIP_BUILD = false # TODO: switch to this in production
