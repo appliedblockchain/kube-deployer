@@ -42,7 +42,6 @@ module NotifySlack
     slack_url = SLACK_HOOK_URL
     if DEBUG
       puts "notify slack: POST #{slack_url}"
-      p json
     end
     json = json.transform_keys &:to_s
     json = { payload: json.to_json }
