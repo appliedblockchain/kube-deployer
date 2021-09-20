@@ -2,12 +2,10 @@ module NetLib
 
   # post json
   def post(url, params)
-    params = params.transform_keys &:to_s
-    params = JSON.dump params
     Excon.post(
       url,
-      body: params,
-      headers: { "Content-Type" => "application/json" }
+      body: URI.encode_www_form(params),
+      headers: { "Content-Type" => "application/x-www-form-urlencoded" }
     )
   end
 
