@@ -61,7 +61,9 @@ class ConfigMerger
   end
 
   def write_config(conf:, file_name:)
-    File.open "#{stack_path}/#{file_name}"
+    File.open("#{stack_path}/#{file_name}", "w") do |file|
+      file.write conf
+    end
   end
 
   def source_yml_files
