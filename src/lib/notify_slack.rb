@@ -45,7 +45,7 @@ module NotifySlack
       p json
     end
     json = json.transform_keys &:to_s
-    json = { payload: json }
+    json = { payload: json.to_json }
     resp = post slack_url, json
     if DEBUG
       puts "Response from slack - status: #{resp.status}"
