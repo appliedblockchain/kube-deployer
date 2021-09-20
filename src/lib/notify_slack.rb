@@ -41,6 +41,8 @@ module NotifySlack
     return unless NOTIFY_SLACK
     slack_url = SLACK_HOOK_URL
     puts "notify slack: POST #{slack_url}" if DEBUG
+    json = json.transform_keys &:to_s
+    json = { payload: json }
     resp = post slack_url, json
     if DEBUG
       puts "Response from slack - status: #{resp.status}"
