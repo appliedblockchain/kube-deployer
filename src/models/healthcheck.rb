@@ -63,7 +63,7 @@ class Healthcheck
     timer = Time.now - @time_start
     return "timeout-retry" if timer > RETRY_TIMEOUT
     puts "retry - #{err.class}" if DEBUG
-    sleep 0.5
+    sleep 1
     retry
   end
 
