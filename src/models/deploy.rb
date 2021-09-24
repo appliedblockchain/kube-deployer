@@ -1,5 +1,4 @@
 class Deploy
-
   include ExeLib
 
   def self.run(project:, env_name:)
@@ -31,5 +30,4 @@ class Deploy
 
     nodes_ok && delete_ok && deploy_ok
   end
-
 end

@@ -1,5 +1,4 @@
 module SlackAuth
-
   def null(var)
     !var || var == ""
   end
@@ -27,7 +26,7 @@ module SlackAuth
   end
 
   SlackAuthCheck = -> (r) {
-    r.halt 200, slack_auth_error_message  if null SLACK_SIGNING_SECRET
+    r.halt 200, slack_auth_error_message if null SLACK_SIGNING_SECRET
     timestamp = timestamp_header r: r
     body = r.body.read
     payload = "v0:#{timestamp}:#{body}"
@@ -37,5 +36,4 @@ module SlackAuth
     r.halt 200, slack_wrong_secret_error_message unless slack_signature == hmac256
     true
   }
-
 end

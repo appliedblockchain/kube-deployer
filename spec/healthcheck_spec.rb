@@ -15,7 +15,6 @@ end
 include SpecSetup
 
 describe "Healthcheck spec" do
-
   let(:hc) { Healthcheck.new host: "test" }
 
   it "instantiates" do
@@ -49,5 +48,4 @@ describe "Healthcheck spec" do
     # # TODO: implement - if you receive 402 then probably your load balancer is not configured correctly
     # # - if you receive 500 probably your application is erroring
   end
-
 end

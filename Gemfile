@@ -7,7 +7,6 @@ gem "rake"
 
 gem "sucker_punch", "~> 3.0"
 
-
 # web
 gem "roda"
 gem "puma"

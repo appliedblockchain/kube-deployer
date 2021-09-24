@@ -1,4 +1,4 @@
-class DeploymentStepFailed < RuntimeError;
+class DeploymentStepFailed < RuntimeError
   attr_reader :step_name
 
   def initialize(step_name:)
@@ -8,7 +8,6 @@ class DeploymentStepFailed < RuntimeError;
 end
 
 class Deployer
-
   include Utils
 
   def self.deploy(project:, env_name:, username:)
@@ -100,5 +99,4 @@ class Deployer
   def start(project_name:, env_name:, branch_name:, username:)
     notify_slack_start project: project_name, environment: env_name, branch_name: branch_name, slack_user: username
   end
-
 end

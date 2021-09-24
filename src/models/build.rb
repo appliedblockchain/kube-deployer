@@ -1,5 +1,4 @@
 class Build
-
   include ExeLib
 
   def self.run(project:, containers:, env_name:)
@@ -14,15 +13,14 @@ class Build
     # TODO: raise a better exception so we need which container failed to build
     return false unless build_ok
     puts "Pushing containers for project #{project.f :project}"
-    push_ok = push_containers containers: containers
-    push_ok
+    push_containers containers: containers
   end
 
   private
 
   def apply_overrides(project:, containers:, env_name:)
     override_option = project[:override_yml]
-    config_not_present  = !override_option || override_option.to_s.empty?
+    config_not_present = !override_option || override_option.to_s.empty?
     return true if config_not_present
     containers.each do |container_name|
       puts "Applying overrides to container #{container_name}"
@@ -83,5 +81,4 @@ class Build
   def dir(container_name)
     "#{PATH}/vendor/app_repo/#{container_name}"
   end
-
 end

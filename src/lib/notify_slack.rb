@@ -1,5 +1,4 @@
 module NotifySlack
-
   def notify_slack_start(branch_name:, slack_user:, project:, environment:)
     branch = "🌵 branch: #{branch_name || "master"}"
     json = {
@@ -43,7 +42,7 @@ module NotifySlack
     if DEBUG
       puts "notify slack: POST #{slack_url}"
     end
-    json = json.transform_keys &:to_s
+    json = json.transform_keys(&:to_s)
     json = { payload: json.to_json }
     resp = post slack_url, json
     if DEBUG
@@ -55,5 +54,4 @@ module NotifySlack
   def notify_slack_error_msg
     "Application deployed but healthcheck errored - check both application and deployer logs - cc #{DEVOPS_PERSON}"
   end
-
 end

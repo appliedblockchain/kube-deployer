@@ -3,29 +3,25 @@ require_relative "main"
 # monkeypatches
 class Hash
   def to_sym
-    self.transform_keys &:to_sym
+    transform_keys(&:to_sym)
   end
 end
 
 # TODO: extract in separate file
 module ErrorResponses
-
   def deployment_error
     {
-      code: "DeploymentFailedError",
+      code:    "DeploymentFailedError",
       message: "error: deployment failed",
     }
   end
-
 end
 
 module DeploymentRunner
-
   def run_deployment(project:, env_name:, username:)
     # schedule async job
     DeployJob.perform_async project: project, env_name: env_name, username: username
   end
-
 end
 
 module SlackParams
@@ -40,8 +36,8 @@ module SlackParams
 
     {
       project: project,
-      env: env,
-      user: user,
+      env:     env,
+      user:    user,
     }
   end
 
@@ -56,7 +52,6 @@ end
 
 # TODO move in deployer
 module DeploymentTriggering
-
   def deployment_trigger_new!(project:, environment:, user:)
     puts "starting a new deployment"
     R.setex "environments:current", DEPLOYMENT_MAX_TIME, Time.now.to_i
@@ -68,16 +63,16 @@ module DeploymentTriggering
     end
 
     {
-      status: "deploying",
-      project: project,
-      environment: environment
+      status:      "deploying",
+      project:     project,
+      environment: environment,
     }
   end
 
   def deployment_wait_end(wait_time:)
     puts "tried to retrigger - stopped: waiting for the deployment to finish..."
     minutes = (wait_time / 60).floor
-    time_left = "#{minutes} min #{(wait_time - minutes*60).ceil} sec"
+    time_left = "#{minutes} min #{(wait_time - minutes * 60).ceil} sec"
     { status: "waiting", wait_time_left: time_left }
   end
 
@@ -91,7 +86,6 @@ module DeploymentTriggering
       deployment_trigger_new! project: project, environment: environment, user: user
     end
   end
-
 end
 
 class DeployerApp < Roda
@@ -108,13 +102,13 @@ class DeployerApp < Roda
   route do |r|
     r.root {
       {
-        status: "ok"
+        status: "ok",
       }.to_sym
     }
 
     r.get("health") {
       {
-        status: "ok",
+        status:    "ok",
         timestamp: Time.now.to_i,
       }.to_sym
     }
@@ -125,13 +119,13 @@ class DeployerApp < Roda
 
       messages = []
       messages << {
-        text: "*Trigger deployment:*",
+        text:   "*Trigger deployment:*",
         status: "OK",
       }
       messages += panels
 
       {
-        text: "",
+        text:        "",
         attachments: messages,
       }
     }
@@ -142,9 +136,9 @@ class DeployerApp < Roda
       puts "params - PROJECT: #{project} - ENV: #{env} - DEPLOY_BY: #{user}"
 
       status_info = run_deployment(
-        project: project,
+        project:  project,
         env_name: env,
-        username: user,
+        username: user
       )
 
       deployment_ok = true
@@ -157,11 +151,9 @@ class DeployerApp < Roda
         status 400
         {
           message: "error",
-          error: deployment_error,
+          error:   deployment_error,
         }
       end
     }
-
   end
-
 end

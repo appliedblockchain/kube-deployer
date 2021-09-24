@@ -1,5 +1,4 @@
 module Kube
-
   # TODO: exec kubectl commands
 
   def pods
@@ -15,5 +14,4 @@ module Kube
     puts "executing #{resource}.#{command}():"
     "kubectl #{command} #{resource} #{args.join " "}"
   end
-
 end

@@ -1,14 +1,11 @@
 module Slack
-
   class ButtonsUI
-
-    ENVS_PRIO = %w(dev development staging demo pentest preprod prod production)
+    ENVS_PRIO = %w[dev development staging demo pentest preprod prod production]
 
     # change params names - section name / buttons info
 
     def self.display(deployer_config:)
-      value = new.display deployer_config: deployer_config
-      value
+      new.display deployer_config: deployer_config
     end
 
     def display(deployer_config:)
@@ -24,7 +21,7 @@ module Slack
         idx += 1
         panels.push panel
       end
-      panels.sort_by!{ |panel| panel.f :text }
+      panels.sort_by! { |panel| panel.f :text }
       panels
     end
 
@@ -51,25 +48,23 @@ module Slack
       # TODO: sort by ENVS_PRIO index
       # buttons.sort_by!{ |button| button.f :xxx }
       {
-        text: "#{stack_name.to_s.capitalize}:",
-        fallback: "",
-        callback_id: "deployment-ab-kube-dev",
-        color: color,
+        text:            "#{stack_name.to_s.capitalize}:",
+        fallback:        "",
+        callback_id:     "deployment-ab-kube-dev",
+        color:           color,
         attachment_type: "default",
-        actions: buttons,
+        actions:         buttons,
         # confirm: SlackConfirm, # TODO: confirm for staging envs
       }
     end
 
     def generate_button(env_tag:, project:, deploy_target:)
       {
-        name: "environment-#{project}-#{env_tag}",
-        text: env_tag.to_s.capitalize,
+        name:  "environment-#{project}-#{env_tag}",
+        text:  env_tag.to_s.capitalize,
         value: env_tag,
-        type: "button",
+        type:  "button",
       }
     end
-
   end
-
 end

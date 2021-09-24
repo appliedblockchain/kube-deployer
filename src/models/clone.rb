@@ -1,5 +1,4 @@
 class Clone
-
   include ExeLib
 
   def self.run(project:, branch_name:)
@@ -35,5 +34,4 @@ class Clone
   def vendor_dir
     "#{PATH}/vendor"
   end
-
 end

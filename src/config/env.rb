@@ -1,7 +1,7 @@
 require "json"
 require "yaml"
 require "bundler"
-Bundler.require :default#,  ...
+Bundler.require :default # ,  ...
 
 PATH = File.expand_path "../../", __FILE__
 

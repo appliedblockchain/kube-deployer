@@ -1,7 +1,6 @@
 class OverrideDirNotFoundError < RuntimeError; end
 
 class ConfigMerger
-
   def self.run(project:, env_name:)
     new(project: project, env_name: env_name).run
   end
@@ -32,7 +31,7 @@ class ConfigMerger
   private
 
   def merge_yml_file(source_file:, file_name:)
-    source_yml    = YAML.load_file source_file
+    source_yml = YAML.load_file source_file
     override_file_path = "#{override_dir}/#{file_name}"
     return unless override_file_exists? override_file_path
     override_yml  = load_override override_file_path: override_file_path
@@ -48,7 +47,7 @@ class ConfigMerger
   end
 
   def override_file_exists?(override_file_path)
-    File.exists? override_file_path
+    File.exist? override_file_path
   end
 
   def load_override(override_file_path:)
@@ -73,5 +72,4 @@ class ConfigMerger
   def override_dir_exists?
     Dir.exist? override_dir
   end
-
 end

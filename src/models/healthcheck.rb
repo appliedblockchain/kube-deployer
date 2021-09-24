@@ -1,9 +1,10 @@
 class HealthcheckFailed502 < RuntimeError; end
+
 class HealthcheckFailed301 < RuntimeError; end
+
 class HealthcheckFailedTimeout < RuntimeError; end
 
 class Healthcheck
-
   RETRY_TIMEOUT = 90 # seconds - consider a deployment failed if the container(s) are not up after (8) seconds
 
   URL_API = "/api/health"
@@ -13,8 +14,8 @@ class Healthcheck
 
   URLS = {
     # ingress:  URL_INGRESS,
-    api:      URL_API,
-    react:    URL_REACT,
+    api:   URL_API,
+    react: URL_REACT,
   }
 
   NET = Excon
@@ -58,7 +59,7 @@ class Healthcheck
     @time_start ||= Time.now
     status = healthcheck_failing_http url: url
     puts "healthcheck failed/status: #{status}"
-    return status
+    status
   rescue HealthcheckFailed502, HealthcheckFailed301, HealthcheckFailedTimeout => err
     timer = Time.now - @time_start
     return "timeout-retry" if timer > RETRY_TIMEOUT
@@ -72,7 +73,7 @@ class Healthcheck
     raise HealthcheckFailed502 if resp.status == 502
     raise HealthcheckFailed301 if resp.status == 301
     return resp.status.to_s    if resp.status != 200
-    return false # healthcheck ok
+    false # healthcheck ok
   rescue Excon::Error::Timeout, Excon::Error::Socket => err
     raise HealthcheckFailedTimeout
   end
@@ -83,5 +84,4 @@ class Healthcheck
     url = "#{PROTO}://#{url}"
     NET.get url
   end
-
 end
