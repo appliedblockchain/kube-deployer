@@ -96,8 +96,6 @@ class Build
     args -= [node_env_arg]
     args << "NODE_ENV=#{env_name}"
     build["args"] = args
-    puts "-" * 80
-    p service
     true
   end
 
