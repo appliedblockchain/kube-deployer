@@ -89,7 +89,7 @@ class Build
   def apply_node_env_build_arg_override(service:, env_name:)
     build = service["build"]
     return unless build
-    args = service["args"]
+    args = build["args"]
     return unless args
     node_env_arg = args.find { |arg| arg =~ /^NODE_ENV=/ }
     return unless node_env_arg
