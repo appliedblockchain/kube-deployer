@@ -69,9 +69,19 @@ class Build
   def apply_override(container_name:, env_name:)
     path = "#{dir container_name}/docker-compose.yml"
     compose_conf = YAML.load_file path
-    service = compose_conf.f("services").values.f(0)
-    service["image"] = replace_tag_name image: service["image"], env_tag: env_name
+    services = compose_conf.f("services").values
+    apply_override_all_containers services: services, env_name: env_name
     File.write path, compose_conf.to_yaml
+  end
+
+  def apply_override_all_containers(services:, env_name:)
+    services.each do |service|
+      apply_override_one_container service: service, env_name: env_name
+    end
+  end
+
+  def apply_override_one_container(service:, env_name:)
+    service["image"] = replace_tag_name image: service["image"], env_tag: env_name
   end
 
   def replace_tag_name(image:, env_tag:)
