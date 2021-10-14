@@ -95,6 +95,7 @@ class Build
     return unless node_env_arg
     args -= [node_env_arg]
     args << "NODE_ENV=#{env_name}"
+    service["args"] = args
     true
   end
 
