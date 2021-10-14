@@ -77,11 +77,25 @@ class Build
   def apply_override_all_containers(services:, env_name:)
     services.each do |service|
       apply_override_one_container service: service, env_name: env_name
+      apply_node_env_build_arg_override service: service, env_name: env_name
     end
   end
 
   def apply_override_one_container(service:, env_name:)
     service["image"] = replace_tag_name image: service["image"], env_tag: env_name
+    true
+  end
+
+  def apply_node_env_build_arg_override(service:, env_name:)
+    build = service["build"]
+    return unless build
+    args = service["args"]
+    return unless args
+    node_env_arg = args.find { |arg| arg =~ /^NODE_ENV=/ }
+    return unless node_env_arg
+    args -= [node_env_arg]
+    args << "NODE_ENV=#{env_name}"
+    true
   end
 
   def replace_tag_name(image:, env_tag:)
