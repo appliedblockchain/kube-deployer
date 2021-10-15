@@ -22,8 +22,9 @@ class Deploy
     puts "List nodes"
     nodes_ok = exe "kubectl get nodes"
 
-    puts "Delete old pods"
-    delete_ok = exe "kubectl delete daemonsets,replicasets,deployments,pods --all"
+    # TODO: consider if we really need this
+    # puts "Delete old pods"
+    # delete_ok = exe "kubectl delete daemonsets,replicasets,deployments,pods --all"
 
     puts "Deploy new pods"
     deploy_ok = exe "cd #{PATH}/vendor/app_repo && kubectl apply -f stack/"
