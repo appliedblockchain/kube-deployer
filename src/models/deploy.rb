@@ -29,6 +29,6 @@ class Deploy
     puts "Deploy new pods"
     deploy_ok = exe "cd #{PATH}/vendor/app_repo && kubectl apply -f stack/"
 
-    nodes_ok && delete_ok && deploy_ok
+    nodes_ok && deploy_ok
   end
 end
