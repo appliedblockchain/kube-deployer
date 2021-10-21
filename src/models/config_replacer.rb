@@ -36,7 +36,7 @@ class ConfigReplacer
     return unless override_file_exists? override_file_path
     override_yml  = load_override override_file_path: override_file_path
     write_config conf: override_yml, file_name: file_name
-    merged_config
+    override_yml
   end
 
   def override_file_exists?(override_file_path)
