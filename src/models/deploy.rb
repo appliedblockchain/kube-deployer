@@ -29,7 +29,7 @@ class Deploy
     puts "Deploy new pods"
     deploy_ok = exe "cd #{PATH}/vendor/app_repo && kubectl apply -f stack/"
 
-    if project =~ /^hen/
+    if context_name.to_s =~ /^hen/
       puts "TMP - Restart for new cluster"
       exe "kubectl rollout restart daemonset.apps/frontend"
       exe "kubectl rollout restart deployment.apps/backend"
