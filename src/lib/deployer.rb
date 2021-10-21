@@ -71,7 +71,7 @@ class Deployer
   def merge_config(project_env:, env_name:)
     override_option     = project_env[:override_yml]
     replace_option      = project_env[:replace_yml]
-    if replace_option && !override_option.to_s.empty?
+    if replace_option && !replace_option.to_s.empty?
       replace_config project_env: project_env, env_name: env_name
       return true
     end
