@@ -49,6 +49,8 @@ class ConfigReplacer
 
   def write_config(conf:, file_name:)
     File.open("#{stack_path}/#{file_name}", "w") do |file|
+      puts "writing: #{stack_path}/#{file_name}"
+      puts conf
       file.write conf
     end
   end
