@@ -34,7 +34,8 @@ class ConfigReplacer
     source_yml = YAML.load_file source_file
     override_file_path = "#{override_dir}/#{file_name}"
     return unless override_file_exists? override_file_path
-    override_yml  = load_override override_file_path: override_file_path
+    override_yml = load_override override_file_path: override_file_path
+    override_yml = override_yml.to_yaml
     write_config conf: override_yml, file_name: file_name
     override_yml
   end
