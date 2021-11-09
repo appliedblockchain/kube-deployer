@@ -24,7 +24,12 @@ class Deploy
 
     # TODO: consider if we really need this
     # puts "Delete old pods"
-    # delete_ok = exe "kubectl delete daemonsets,replicasets,deployments,pods --all"
+    delete_old_pods = project.f :delete_old_pods
+
+    delete_ok = true
+    if delete old pods
+      delete_ok = exe "kubectl delete daemonsets,replicasets,deployments,pods --all"
+    end
 
     puts "Deploy new pods"
     deploy_ok = exe "cd #{PATH}/vendor/app_repo && kubectl apply -f stack/"
@@ -35,6 +40,6 @@ class Deploy
       exe "kubectl rollout restart deployment.apps/backend"
     end
 
-    nodes_ok && deploy_ok
+    nodes_ok && delete_ok && deploy_ok
   end
 end
