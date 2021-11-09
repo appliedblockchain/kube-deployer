@@ -22,10 +22,9 @@ class Deploy
     puts "List nodes"
     nodes_ok = exe "kubectl get nodes"
 
-    delete_old_pods = project.f :delete pods
-
     delete_ok = true
-    if delete old pods
+    delete_old_pods = project.f :delete_pods
+    if delete_old_pods
       puts "Delete old pods"
       delete_ok = exe "kubectl delete daemonsets,replicasets,deployments,pods --all"
     end
